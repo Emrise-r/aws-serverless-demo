@@ -1,0 +1,6 @@
+# Default ignored files
+/venv
+/source/script
+/.idea
+Pipfile.lock
+pyProject.iml
