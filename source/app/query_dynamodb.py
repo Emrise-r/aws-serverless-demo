@@ -96,10 +96,10 @@ event = {
 
 def lambda_handler(event, context):
     table_name = 'serverless_test_table'
-    # dynamodb = connect_dynamodb()
-    # table = dynamodb.Table(table_name)
+    dynamodb = connect_dynamodb()
+    table = dynamodb.Table(table_name)
     result = None
-    # print("context:", json.dumps(context) )
+    print("context:", json.dumps(context) )
     print("event:", json.dumps(event), 'type:', type(event))
     queryStringParameters = event['queryStringParameters']
     print("queryStringParameters:", json.dumps(queryStringParameters), 'type:', type(queryStringParameters))
