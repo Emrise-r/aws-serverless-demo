@@ -1,6 +1,7 @@
 # Default ignored files
 /venv
 /source/script
+/source/app/__pycache__
 /.idea
 Pipfile.lock
 pyProject.iml
