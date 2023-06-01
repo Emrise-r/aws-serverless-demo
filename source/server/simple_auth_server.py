@@ -11,7 +11,6 @@ from requests.auth import HTTPBasicAuth
 
 properties = dotenv_values()
 
-
 PORT = int(properties.get('server.port'))
 client_id = properties.get('aws.client_id')
 client_secret = properties.get('aws.client_secret')
@@ -23,18 +22,23 @@ class MyHttpRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         path = self.path
         print(path)
-
-        match path:
-            case '/auth':
-                self.process_auth()
-            case path if path.startswith('/code?'):
-                self.process_exchange()
-            case _:
-                print('operator not support')
-
+        try:
+            match path:
+                case path if path.startswith('/auth'):
+                    self.process_auth()
+                case path if path.startswith('/code?'):
+                    self.process_exchange()
+                case _:
+                    print('operator not support')
+        except Exception as e:
+            print('Exception args: {}'.format(', '.join(e.args)))
 
     def process_auth(self):
         resource_url = cognito_url + '/login?'
+        query_components = parse_qs(urlparse(self.path).query)
+        scopes = query_components.get('scope')
+        if scopes:
+            scope = ' '.join(scopes)
         params = {'client_id': client_id,
                   'response_type': 'code',
                   'scope': scope,
@@ -66,4 +70,3 @@ Handler = MyHttpRequestHandler
 with http.server.HTTPServer(("", PORT), Handler) as httpd:
     print("serving at port", PORT)
     httpd.serve_forever()
-
