@@ -22,4 +22,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         OUTPUT=$(pylint $(git ls-files '*.py') --exit-zero)
-        echo "MESSAGE=$OUTPUT" >> $GITHUB_ENV
+        # echo "MESSAGE=$OUTPUT" >> $GITHUB_ENV
