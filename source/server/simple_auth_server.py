@@ -58,7 +58,7 @@ class MyHttpRequestHandler(http.server.BaseHTTPRequestHandler):
                    'code': code,
                    'redirect_uri': 'http://localhost:8000/code'}
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        response = requests.post(resource_url, auth=auth, data=payload, headers=headers)
+        response = requests.post(resource_url, auth=auth, data=payload, headers=headers, timeout=10)
         print(response)
         self.send_response(200)
         self.end_headers()

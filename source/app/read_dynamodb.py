@@ -53,14 +53,14 @@ def lambda_handler(event, context):
     print("event:", json.dumps(event), 'type:', type(event))
     pathParameters = event['pathParameters']
     print("pathParameters:", json.dumps(pathParameters), 'type:', type(pathParameters))
-    userid = pathParameters['id']
-    print("UserId:", json.dumps(userid), 'type:', type(userid))
+    id = pathParameters['id']
+    print("id:", json.dumps(id), 'type:', type(id))
     key = {
-        'Userid': userid
+        'id': id
     }
     result = table.get_item(Key=key)
     print(result)
-    return respond(None, result)
+    return result
 
 
 lambda_handler(event, None)

@@ -2,6 +2,7 @@ import json
 from connect_dynamodb import connect_dynamodb
 from respond import respond
 from boto3.dynamodb.conditions import Attr
+from handle import handle_exception
 
 event = {
     "resource": "/query-data",
@@ -51,7 +52,9 @@ event = {
             "https"
         ]
     },
-    "queryStringParameters": "null",
+    "queryStringParameters": {
+        "name": "Thanh"
+    },
     "multiValueQueryStringParameters": {
         "Userid": [
             "aaaaa"
@@ -94,23 +97,31 @@ event = {
 }
 
 
+
 def lambda_handler(event, context):
+    result = handle_exception(process_event, event=event)
+    if isinstance(result, Exception):
+        return respond(result, None)
+    else:
+        return respond(None, result['Items'])
+
+
+def process_event(**kwargs):
+    event = kwargs['event']
     table_name = 'serverless_test_table'
     dynamodb = connect_dynamodb()
     table = dynamodb.Table(table_name)
-    result = None
-    print("context:", json.dumps(context) )
     print("event:", json.dumps(event), 'type:', type(event))
     queryStringParameters = event['queryStringParameters']
     print("queryStringParameters:", json.dumps(queryStringParameters), 'type:', type(queryStringParameters))
-    if queryStringParameters is None | queryStringParameters['name'] is None:
+    if queryStringParameters is None or queryStringParameters['name'] is None:
         name = ''
     else:
         name = queryStringParameters['name']
         print("Name:", json.dumps(name), 'type:', type(name))
-    result = table.scan(FilterExpression=Attr('Name').contains(name))
+    result = table.scan(FilterExpression=Attr('FullName').contains(name))
     print(result)
-    return respond(None, result)
+    return result
 
 
 lambda_handler(event, None)

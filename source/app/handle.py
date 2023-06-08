@@ -1,9 +1,9 @@
-def handle_exception(mainfunc=None, **kwargs):
+def handle_exception(main_func=None, **kwargs):
     try:
 
         # Execute the main logic of the Lambda function
-        if mainfunc is not None:
-            result = mainfunc(**kwargs)
+        if main_func is not None:
+            result = main_func(**kwargs)
 
             # Return the result
             return result
