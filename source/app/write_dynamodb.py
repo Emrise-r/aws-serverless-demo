@@ -21,7 +21,7 @@ def lambda_handler(event, context):
     # batch_writer = table.batch_writer()
     for person in people:
         item = {
-            '_id': uuid.uuid4().hex,
+            'id': uuid.uuid4().hex,
             'Userid': person['userid'],
             'FullName': person['name']
         }

@@ -25,24 +25,14 @@ run
 python /source/server/simple_auth_server.py
 ```
 
-open browser type `http://localhost:8000/auth?scope=https://407zzg11c6.execute-api.us-east-1.amazonaws.com/default/query lambda-app/read`
+open browser type `http://localhost:8000/auth?scope=lambda-app/read lambda-app/write openid`
 
 scope:
-
-long scope
-
-```agsl
-https://407zzg11c6.execute-api.us-east-1.amazonaws.com/default/auth
-https://407zzg11c6.execute-api.us-east-1.amazonaws.com/default/query
-https://407zzg11c6.execute-api.us-east-1.amazonaws.com/default/read
-https://407zzg11c6.execute-api.us-east-1.amazonaws.com/default/write
-```
-
-short scope
 
 ```agsl
 lambda-app/auth
 lambda-app/query
 lambda-app/read
 lambda-app/write
+openid
 ```
